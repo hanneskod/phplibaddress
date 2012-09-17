@@ -4,10 +4,6 @@ use PDO;
 use itbz\Cache\VoidCacher;
 
 
-// Using the mreg autoloader for now...
-require_once __DIR__ . "/../../../../../libs/autoload.php";
-
-
 class CountryTest extends \PHPUnit_Framework_TestCase
 {
 
