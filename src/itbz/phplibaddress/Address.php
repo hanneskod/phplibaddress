@@ -15,7 +15,7 @@ namespace itbz\STB\Communication;
 
 
 /**
- * Models addresses as of Swedish standard SS 613401:2011 ed. 3
+ * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
  *
  * @package STB\Communication
  */
