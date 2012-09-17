@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the STB package
+ * This file is part of the phplinaddress package
  *
  * Copyright (c) 2012 Hannes Forsgård
  *
@@ -9,29 +9,29 @@
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
-namespace itbz\STB\Communication;
+namespace itbz\phplinaddress;
 
 
 /**
  * Fetch address postcode, mock base class
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
 class AddressPostcode
 {
 
-	/**
-	 * Fetch postcode, does nothing
-	 * @param string $deliveryPoint
-	 * @param string $town
-	 * @return string
-	 */
-	public function fetchPostcode($deliveryPoint, $town){
-		assert('is_string($deliveryPoint)');
-		assert('is_string($town)');
-		return '';
-	}
+    /**
+     * Fetch postcode, does nothing
+     * @param string $deliveryPoint
+     * @param string $town
+     * @return string
+     */
+    public function fetchPostcode($deliveryPoint, $town){
+        assert('is_string($deliveryPoint)');
+        assert('is_string($town)');
+        return '';
+    }
 
 }

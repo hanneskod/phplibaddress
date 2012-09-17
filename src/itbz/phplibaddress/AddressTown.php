@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the STB package
+ * This file is part of the phplinaddress package
  *
  * Copyright (c) 2012 Hannes Forsgård
  *
@@ -9,26 +9,26 @@
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
-namespace itbz\STB\Communication;
+namespace itbz\phplinaddress;
 
 
 /**
  * Fetch address town information, mock base class
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
 class AddressTown
 {
 
-	/**
-	 * Fetch town, returns nothing
-	 * @param string $postcode
-	 * @return string
-	 */ 
-	public function fetchTown($postcode){
-		return '';
-	}
+    /**
+     * Fetch town, returns nothing
+     * @param string $postcode
+     * @return string
+     */ 
+    public function fetchTown($postcode){
+        return '';
+    }
 
 }

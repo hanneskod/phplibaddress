@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the STB package
+ * This file is part of the phplinaddress package
  *
  * Copyright (c) 2012 Hannes Forsgård
  *
@@ -9,9 +9,9 @@
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
-namespace itbz\STB\Communication;
+namespace itbz\phplinaddress;
 use PDO;
 use itbz\Cache\CacheInterface;
 
@@ -19,7 +19,7 @@ use itbz\Cache\CacheInterface;
 /**
  * Lookup country codes from db
  *
- * @package STB\Communication
+ * @package phplinaddress
  */
 class Country
 {
@@ -82,8 +82,8 @@ class Country
     public function fetchByAlpha2($code, $lang = 'EN')
     {
         assert('is_string($code)');
-		if ( !ctype_alpha($code) ) return '';
-		$code = strtoupper($code);
+        if ( !ctype_alpha($code) ) return '';
+        $code = strtoupper($code);
         return $this->fetchBy('country_code', $code, $lang);
     }
 
