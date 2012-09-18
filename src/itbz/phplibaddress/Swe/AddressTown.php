@@ -24,34 +24,34 @@ use itbz\STB\Communication\AddressTown as AddressTownBase;
 class AddressTown extends AddressTownBase
 {
 
-	/**
-	 * Fetch town from posten.se
-	 * @param string $postcode
-	 * @return string
+    /**
+     * Fetch town from posten.se
+     * @param string $postcode
+     * @return string
      * @throws Exception if unable to reach posten.se, or if returned HTML is broken
-	 */ 
-	public function fetchTown($postcode){
-		assert('is_string($postcode)');
-		$postcode = urlencode($postcode);
+     */ 
+    public function fetchTown($postcode){
+        assert('is_string($postcode)');
+        $postcode = urlencode($postcode);
 
-		$searchUrl = "http://www.posten.se/soktjanst/postnummersok/resultat.jspv?pnr=$postcode";
-		$result = @file_get_contents($searchUrl);
-		
-		if ( !$result ) {
+        $searchUrl = "http://www.posten.se/soktjanst/postnummersok/resultat.jspv?pnr=$postcode";
+        $result = @file_get_contents($searchUrl);
+        
+        if ( !$result ) {
             throw new Exception("Unable to fetch town from $searchUrl");
-		}
+        }
 
-		preg_match('!<TABLE class="result".*?</TABLE>!s', $result, $match);
-		if ( count($match) == 0 ) {
+        preg_match('!<TABLE class="result".*?</TABLE>!s', $result, $match);
+        if ( count($match) == 0 ) {
             throw new Exception("Unable to parse content from $searchUrl");
-		}
+        }
 
-		preg_match('!<TD class="lastcol">([^<]*)</TD>!s', $match[0], $match);
-		$town = utf8_encode(end($match));
-		if ( !preg_match('/^[a-zA-ZåäöÅÄÖ -]*$/', $town) ) {
+        preg_match('!<TD class="lastcol">([^<]*)</TD>!s', $match[0], $match);
+        $town = utf8_encode(end($match));
+        if ( !preg_match('/^[a-zA-ZåäöÅÄÖ -]*$/', $town) ) {
             throw new Exception("Unable to parse content from $searchUrl");
-		}
-		return $town;
-	}
+        }
+        return $town;
+    }
 
 }

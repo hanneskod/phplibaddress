@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the phplinaddress package
+ * This file is part of the phplibaddress package
  *
  * Copyright (c) 2012 Hannes Forsgård
  *
@@ -9,323 +9,424 @@
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
  *
- * @package phplinaddress
+ * @package phplibaddress
  */
-namespace itbz\phplinaddress;
+namespace itbz\phplibaddress;
+use itbz\phpcountry\Country;
+use itbz\phpcountry\TranslationException;
 
 
 /**
  * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
  *
- * @package phplinaddress
+ * @package phplibaddress
  */
 class Address
 {
 
     /**
-     * Object for fetching countries
-     * @var Country $countries
+     * Address form
+     * 
+     * @var string
      */
-    private $countries;
-
-    /**
-     * Address field
-     * @property string $form
-     */
-    public $form = '';
+    private $_form = '';
 
 
     /**
-     * Address field
-     * @property string $given_name
+     * Address given name
+     *
+     * @var string
      */
-    public $given_name = '';
+    private $_givenName = '';
 
 
     /**
-     * Address field
-     * @property string $surname
+     * Address surname
+     *
+     * @var string
      */
-    public $surname = '';
+    private $_surname = '';
 
 
     /**
-     * Address field
-     * @property string $organisation_name
+     * Address name of organisation
+     * 
+     * @var string
      */
-    public $organisation_name = '';
+    private $_organisationName = '';
 
 
     /**
-     * Address field
-     * @property string $legal_status
+     * Address legal status
+     * 
+     * @var string
      */
-    public $legal_status = '';
+    private $_legalStatus = '';
 
 
     /**
-     * Address field
-     * @property string $organisational_unit
+     * Address organisational unit
+     * 
+     * @var string
      */
-    public $organisational_unit = '';
+    private $_organisationalUnit = '';
 
 
     /**
-     * Address field
-     * @property string $mailee
+     * Address name of mailee
+     * 
+     * @var string
      */
-    public $mailee = '';
+    private $_mailee = '';
 
 
     /**
-     * Address field
-     * @property string $mailee_role_descriptor
+     * Address mailee role descriptor
+     * 
+     * @var string
      */
-    public $mailee_role_descriptor = 'c/o';
+    private $_maileeRoleDescriptor = 'c/o';
 
 
     /**
-     * Address field
-     * @property string $delivery_service
+     * Type of delivery service
+     *
+     * @var string
      */
-    public $delivery_service = '';
+    private $_deliveryService = '';
 
 
     /**
-     * Address field
-     * @property string $alternate_delivery_service
+     * Specification of delivery service
+     *
+     * @var string
      */
-    public $alternate_delivery_service = '';
+    private $_alternateDeliveryService = '';
 
 
     /**
-     * Address field
-     * @property string $thoroughfare
+     * Address thoroughfare (street name)
+     *
+     * @var string
      */
-    public $thoroughfare = '';
+    private $_thoroughfare = '';
 
 
     /**
-     * Address field
-     * @property string $plot
+     * Address plot (street number)
+     *
+     * @var string
      */
-    public $plot = '';
+    private $_plot = '';
 
 
     /**
-     * Address field
-     * @property string $littera
+     * Address littera (letter)
+     *
+     * @var string
      */
-    public $littera = '';
+    private $_littera = '';
 
 
     /**
-     * Address field
-     * @property string $stairwell
+     * Address stairwell
+     *
+     * @var string
      */
-    public $stairwell = '';
+    private $_stairwell = '';
 
 
     /**
-     * Address field
-     * @property string $door
+     * Address door (apartment number)
+     *
+     * @var string
      */
-    public $door = '';
+    private $_door = '';
 
 
     /**
-     * Address field
-     * @property string $floor
+     * Address floor
+     *
+     * @var string
      */
-    public $floor = '';
+    private $_floor = '';
 
 
     /**
-     * Address field
-     * @property string $supplementary_delivery_point_data
+     * Address supplementary data
+     *
+     * @var string
      */
-    public $supplementary_delivery_point_data = '';
+    private $_supplementaryDeliveryPointData = '';
 
 
     /**
-     * Address field
-     * @property string $postcode
+     * Address postcode (zip code)
+     *
+     * @var string
      */
-    public $postcode = '';
+    private $_postcode = '';
 
 
     /**
-     * Address field
-     * @property string $town
+     * Address town
+     *
+     * @var string
      */
-    public $town = '';
+    private $_town = '';
 
 
     /**
-     * Address field
-     * @property string $country_code
+     * ISO 3166-1 country code translator
+     *
+     * @var Country
      */
-    public $country_code = '';
+    private $_countryCodes;
 
 
     /**
-     * Set dependencies
-     * @param Country $countries
+     * ISO 3166 alpha 2 destination country code
+     *
+     * @var string
      */
-    public function __construct(Country $countries)
+    private $_country = '';
+
+
+    /**
+     * ISO 3166 alpha 2 origin country code
+     *
+     * @var string
+     */
+    private $_countryOfOrigin = '';
+
+
+    /**
+     * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
+     *
+     * @param Country $countryCodeTranslator The translation language should be
+     * set either to the language of the originating country, or to one of the
+     * colonial languages (eg. english).
+     */
+    public function __construct(Country $countryCodeTranslator)
     {
-        $this->countries = $countries;
+        $this->_countryCodes = $countryCodeTranslator;
     }
 
 
     /**
-     * Mottagare.
+     * Get addresse (recipient)
+     *
      * @return string
      */
     public function getAddressee()
     {
-        $addressee = array();
-        $addressee[] = mb_substr($this->organisational_unit, 0, 36);
-        $addressee[] = self::concatNames($this->given_name, $this->surname, $this->form);
-        $org = mb_substr($this->organisation_name, 0, 36);
-
-        if (mb_strlen("$org {$this->legal_status}") <= 36) {
-            $org = trim("$org {$this->legal_status}");
+        // Add legal status to name of organisation if possible
+        $org = mb_substr($this->getOrganisationName(), 0, 36);
+        if (mb_strlen("$org {$this->getLegalStatus()}") <= 36) {
+            $org = trim("$org {$this->getLegalStatus()}");
         }
 
-        $addressee[] = $org;
-        $addressee = array_filter($addressee);
-        return implode("\n", $addressee);
+        // Construct addressee
+        $lines = array(
+            mb_substr($this->getOrganisationalUnit(), 0, 36),
+            self::concatNames(
+                $this->getGivenName(),
+                $this->getSurname(),
+                $this->getForm()
+            ),
+            $org
+        );
+
+        return implode("\n", array_filter($lines));
     }
 
 
     /**
-     * Förmedlande mottagare.
+     * Get mailee (including role descriptor)
+     * 
      * @return string
      */
     public function getMailee()
     {
-        if ( empty($this->mailee) ) return '';
-        return trim("{$this->mailee_role_descriptor} {$this->mailee}");
+        if ($this->getNameOfMailee() == '') {
+            
+            return '';
+        }
+
+        return trim(
+            sprintf(
+                "%s %s",
+                $this->getMaileeRoleDescriptor(),
+                $this->getNameOfMailee()
+            )
+        );
     }
 
 
     /**
-     * Administrativt avlämningsställe. Exempelvis Box eller Poste restante adresser
+     * Get town and zip-code according to swedish standars.
+     *
+     * If the address is not domestic country code and name are included.
+     *
      * @return string
+     */
+    public function getLocality()
+    {
+        if ($this->isDomestic()) {
+            
+            return trim("{$this->getPostcode()} {$this->getTown()}");
+        } else {
+            
+            return trim(
+                sprintf(
+                    "%s-%s %s\n%s",
+                    $this->getCountryCode(),
+                    $this->getPostcode(),
+                    $this->getTown(),
+                    $this->getCountry()
+                )
+            );
+        }
+    }
+
+
+    /**
+     * Get administrative service point address
+     *
+     * Eg a box or poste restante address
+     *
+     * @return string Returns the empty string ig isServicePoint returns FALSE
      */
     public function getServicePoint()
     {
-        if (empty($this->delivery_service)) {
+        if (!$this->isServicePoint()) {
+
             return '';
+        } else {
+
+            return trim(
+                sprintf(
+                    "%s %s",
+                    $this->getDeliveryService(),
+                    $this->getAlternateDeliveryService()
+                )
+            );
         }
-        
-        return trim("{$this->delivery_service} {$this->alternate_delivery_service}");
     }
-    
+
 
     /**
-     * Geografiskt avlämningsställe. Exempelvis gata, lägenhetsnummer osv..
+     * Get geographical address location
+     *
+     * Eg. street, apartment number and so on.
+     *
      * @return string
      */
     public function getDeliveryLocation()
     {
-        $elements = array();
-        if ( empty($this->thoroughfare) ) return '';
+        if (!$this->isDeliveryLocation()) {
 
-        // Get elements
-        $elements[] = $this->thoroughfare;
-        if ( !empty($this->plot) ) $elements[] = $this->plot;
-        if ( !empty($this->littera) ) $elements[] = $this->littera;
-        if ( !empty($this->stairwell) ) $elements[] = $this->stairwell;
-        if ( !empty($this->door) ) {
-            $elements[] = "lgh {$this->door}";
-        } elseif ( !empty($this->floor) ) {
-            $elements[] = $this->floor;
+            return '';
         }
 
-        // Convert to strings
-        if ( mb_strlen(implode(' ', $elements)) > 36 ) {
-            $lines = array(
-                array_shift($elements),
-                implode(' ', $elements)
-            );
+        $parts = array(
+            $this->getThoroughfare(),
+            $this->getPlot(),
+            $this->getLittera(),
+            $this->getStairwell()
+        );
+
+        if ($this->getDoor() != '') {
+            $parts[] = "lgh {$this->getDoor()}";
         } else {
-            $lines = array(implode(' ', $elements));
-            // Supplementary data goes above thoroughfare
-            if ( !empty($this->supplementary_delivery_point_data) ) {
-                array_unshift($lines, $this->supplementary_delivery_point_data);
+            $parts[] = $this->getFloor();
+        }
+
+        $parts = array_filter($parts);
+
+        // If longer than 36 characters break up into two lines
+        if (mb_strlen(implode(' ', $parts)) > 36) {
+            $lines = array(
+                array_shift($parts),
+                implode(' ', $parts)
+            );
+
+        // Else include supplementary delivery point above the thoroughfare
+        } else {
+            $lines = array(implode(' ', $parts));
+            if ($this->getSupplementaryData() != '') {
+                array_unshift($lines, $this->getSupplementaryData());
             }
         }
 
-        $location = implode("\n", $lines);
-
-        return trim($location);
+        return trim(implode("\n", $lines));
     }
 
 
     /**
-     * Postadress enligt svensk standard. Innehåller även landsinformation
-     * om försändelsen ska skickas till utlandet. Ex. SE-214 20 Malmö
-     * @param string $mailerCountry Land försändelsen skickas från,
-     * ISO 3166 Alpha 2 landskod.
+     * Get the delivery point address.
+     *
+     * Can be an administrative address (service point) or a geographical
+     * address (delivery location). Locality is always included in the deilvery
+     * point address.
+     *
      * @return string
      */
-    public function getLocality($mailerCountry = 'SE')
+    public function getDeliveryPoint()
     {
-        $locality = trim("{$this->postcode} {$this->town}");
-
-        // Foreign addressee ?
-        if ( !empty($this->country_code) && strcasecmp($this->country_code, $mailerCountry) != 0 ) {
-            $cc = mb_strtoupper($this->country_code);
-            $locality = "$cc-$locality\n";
-            $locality .= $this->countries->fetchByAlpha2($this->country_code, $mailerCountry);
+        if ($this->isServicePoint()) {
+            $point = $this->getServicePoint();
+        } else {
+            $point = $this->getDeliveryLocation();
         }
 
-        return trim($locality);
+        return trim(
+            sprintf(
+                "%s\n%s",
+                $point,
+                $this->getLocality()
+            )
+        );
     }
 
 
-    /**
-     * Utdelningsadress. Administrativt eller geografiskt avlämningsställe.
-     * Inklusive postadress och landsinformation om försändelsen ska skickas
-     * till utlandet.
-     * @param string $mailerCountry Land försändelsen skickas från,
-     * ISO 3166 Alpha 2 landskod.
-     * @return string
-     */
-    public function getDeliveryPoint($mailerCountry = 'SE')
-    {
-        $point = $this->getServicePoint();
-        if ( empty($point) ) $point =  $this->getDeliveryLocation();
-        $point .= "\n" . $this->getLocality($mailerCountry);
-        return trim($point);
-    }
-
+    // Den här har jag inte riktigt gjort ännu
+    // det finns inte heller några tester som körs på den...
 
     /**
-     * Komplett adress.
-     * @param string $mailerCountry Land försändelsen skickas från,
-     * ISO 3166 Alpha 2 landskod.
+     * Get complete address
+     * 
      * @return string
      */
     public function getAddress($mailerCountry = 'SE')
     {
+        // TODO tillfälligt, ska bort helt...
+        $this->setCountryOfOrigin($mailerCountry);
+
+
         $addr = array();
         $addr[] = $this->getAddressee();
         $addr[] = $this->getMailee();
-        $addr[] = $this->getDeliveryPoint($mailerCountry);
+        $addr[] = $this->getDeliveryPoint();
         $addr = array_filter($addr);
         $addr = implode("\n", $addr);
         $addr = self::sanitize($addr);
+       
         return trim($addr);
     }
 
 
+    // värför är dessa statiska??
+    // borde jag inte styra det på något annat sätt...
+
     /**
+     * Validate address syntax
+     * 
      * Returns false id address contains more than 6 lines
      * or any line is longer than 36 characters
+     * 
      * @param string $addr
+     * 
      * @return bool
      */
     static public function validate($addr)
@@ -339,11 +440,14 @@ class Address
     }
 
 
-
     /**
+     * Sanitiza address syntax
+     * 
      * Force address to contain no more than 6 lines
      * and no line that is longer than 36 characters
+     * 
      * @param string $addr
+     * 
      * @return bool
      */
     static public function sanitize($addr)
@@ -362,6 +466,592 @@ class Address
         
         return implode("\n", $arr);
     }
+
+
+    // getters och setters under här har jag gjort...
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+    /**
+     * Get form
+     *
+     * @return string
+     */
+    public function getForm()
+    {
+        return $this->_form;
+    }
+    
+    
+    /**
+     * Set form
+     *
+     * @param string $form
+     * 
+     * @return void
+     */
+    public function setForm($form)
+    {
+        assert('is_string($form)');
+        $this->_form = $form;
+    }
+    
+
+    /**
+     * Get given name
+     *
+     * @return string
+     */
+    public function getGivenName()
+    {
+        return $this->_givenName;
+    }
+    
+    
+    /**
+     * Set given name
+     *
+     * @param string $givenName
+     * 
+     * @return void
+     */
+    public function setGivenName($givenName)
+    {
+        assert('is_string($givenName)');
+        $this->_givenName = $givenName;
+    }
+    
+
+    /**
+     * Get surname
+     *
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->_surname;
+    }
+    
+    
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     *
+     * @return void
+     */
+    public function setSurname($surname)
+    {
+        assert('is_string($surname)');
+        $this->_surname = $surname;
+    }
+    
+
+    /**
+     * Get name of organisation
+     *
+     * @return string
+     */
+    public function getOrganisationName()
+    {
+        return $this->_organisationName;
+    }
+    
+    
+    /**
+     * Set name of organisation
+     *
+     * @param string $organisationName
+     * 
+     * @return void
+     */
+    public function setOrganisationName($organisationName)
+    {
+        assert('is_string($organisationName)');
+        $this->_organisationName = $organisationName;
+    }
+    
+
+    /**
+     * Get legal status
+     *
+     * @return string
+     */
+    public function getLegalStatus()
+    {
+        return $this->_legalStatus;
+    }
+    
+    
+    /**
+     * Set legal status
+     *
+     * @param string $legalStatus
+     *
+     * @return void
+     */
+    public function setLegalStatus($legalStatus)
+    {
+        assert('is_string($legalStatus)');
+        $this->_legalStatus = $legalStatus;
+    }
+    
+
+    /**
+     * Get organisational unit
+     *
+     * @return string
+     */
+    public function getOrganisationalUnit()
+    {
+        return $this->_organisationalUnit;
+    }
+    
+    
+    /**
+     * Set organisational unit
+     *
+     * @param string $organisationalUnit
+     *
+     * @return void
+     */
+    public function setOrganisationalUnit($organisationalUnit)
+    {
+        assert('is_string($organisationalUnit)');
+        $this->_organisationalUnit = $organisationalUnit;
+    }
+    
+
+    /**
+     * Get name of mailee
+     *
+     * @return string
+     */
+    public function getNameOfMailee()
+    {
+        return $this->_mailee;
+    }
+    
+    
+    /**
+     * Set name of mailee
+     *
+     * @param string $mailee
+     *
+     * @return void
+     */
+    public function setNameOfMailee($mailee)
+    {
+        assert('is_string($mailee)');
+        $this->_mailee = $mailee;
+    }
+    
+
+    /**
+     * Get mailee role descriptor
+     *
+     * @return string
+     */
+    public function getMaileeRoleDescriptor()
+    {
+        return $this->_maileeRoleDescriptor;
+    }
+    
+    
+    /**
+     * Set mailee role descriptor
+     *
+     * @param string $maileeRoleDescriptor
+     *
+     * @return void
+     */
+    public function setMaileeRoleDescriptor($maileeRoleDescriptor)
+    {
+        assert('is_string($maileeRoleDescriptor)');
+        $this->_maileeRoleDescriptor = $maileeRoleDescriptor;
+    }
+
+
+    /**
+     * Get thoroughfare (street name)
+     *
+     * @return string
+     */
+    public function getThoroughfare()
+    {
+        return $this->_thoroughfare;
+    }
+    
+    
+    /**
+     * Set thoroughfare (street name)
+     *
+     * @param string $thoroughfare
+     * 
+     * @return void
+     */
+    public function setThoroughfare($thoroughfare)
+    {
+        assert('is_string($thoroughfare)');
+        $this->_thoroughfare = $thoroughfare;
+    }
+    
+
+    /**
+     * Get plot (street number)
+     *
+     * @return string
+     */
+    public function getPlot()
+    {
+        return $this->_plot;
+    }
+    
+    
+    /**
+     * Set plot (street number)
+     *
+     * @param string $plot
+     * 
+     * @return void
+     */
+    public function setPlot($plot)
+    {
+        assert('is_string($plot)');
+        $this->_plot = $plot;
+    }
+    
+
+    /**
+     * Get littera (letter)
+     *
+     * @return string
+     */
+    public function getLittera()
+    {
+        return $this->_littera;
+    }
+    
+    
+    /**
+     * Set littera (letter)
+     *
+     * @param string $littera
+     * 
+     * @return void
+     */
+    public function setLittera($littera)
+    {
+        assert('is_string($littera)');
+        $this->_littera = $littera;
+    }
+    
+
+    /**
+     * Get stairwell
+     *
+     * @return string
+     */
+    public function getStairwell()
+    {
+        return $this->_stairwell;
+    }
+    
+    
+    /**
+     * Set stairwell
+     *
+     * @param string $stairwell
+     * 
+     * @return void
+     */
+    public function setStairwell($stairwell)
+    {
+        assert('is_string($stairwell)');
+        $this->_stairwell = $stairwell;
+    }
+    
+
+    /**
+     * Get door (apartment number)
+     *
+     * @return string
+     */
+    public function getDoor()
+    {
+        return $this->_door;
+    }
+    
+    
+    /**
+     * Set door (apartment number)
+     *
+     * @param string $door
+     * 
+     * @return void
+     */
+    public function setDoor($door)
+    {
+        assert('is_string($door)');
+        $this->_door = $door;
+    }
+    
+
+    /**
+     * Get floor
+     *
+     * @return string
+     */
+    public function getFloor()
+    {
+        return $this->_floor;
+    }
+    
+    
+    /**
+     * Set floor
+     *
+     * @param string $floor
+     * 
+     * @return void
+     */
+    public function setFloor($floor)
+    {
+        assert('is_string($floor)');
+        $this->_floor = $floor;
+    }
+
+
+    /**
+     * Get supplementary delivery point information
+     *
+     * @return string
+     */
+    public function getSupplementaryData()
+    {
+        return $this->_supplementaryDeliveryPointData;
+    }
+    
+    
+    /**
+     * Set supplementary delivery point information
+     *
+     * @param string $supplementaryData
+     * 
+     * @return void
+     */
+    public function setSupplementaryData($supplementaryData)
+    {
+        assert('is_string($supplementaryData)');
+        $this->_supplementaryDeliveryPointData = $supplementaryData;
+    }
+    
+
+    /**
+     * Get postcode (zip code)
+     *
+     * @return string
+     */
+    public function getPostcode()
+    {
+        return $this->_postcode;
+    }
+    
+    
+    /**
+     * Set postcode (zip code)
+     *
+     * @param string $postcode
+     * 
+     * @return void
+     */
+    public function setPostcode($postcode)
+    {
+        assert('is_string($postcode)');
+        $this->_postcode = $postcode;
+    }
+    
+
+    /**
+     * Get town
+     *
+     * @return string
+     */
+    public function getTown()
+    {
+        return $this->_town;
+    }
+    
+    
+    /**
+     * Set town
+     *
+     * @param string $town
+     * 
+     * @return void
+     */
+    public function setTown($town)
+    {
+        assert('is_string($town)');
+        $this->_town = $town;
+    }
+
+
+    /**
+     * Set destination country code
+     *
+     * @param string $code Two letter ISO 3166-1 country code
+     *
+     * @return void
+     */
+    public function setCountryCode($code)
+    {
+        assert('is_string($code) && strlen($code) == 2 && ctype_alpha($code)');
+        $this->_country = strtoupper($code);
+    }
+
+
+    /**
+     * Ǵet current destination country code
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->_country;
+    }
+
+
+    /**
+     * Get name of country
+     *
+     * @return string Returns the empty string if no translation could be found
+     */
+    public function getCountry()
+    {
+        try {
+            
+            return $this->_countryCodes->translate($this->getCountryCode());
+        } catch (TranslationException $e) {
+            
+            return '';
+        }
+    }
+
+
+    /**
+     * Set orogin country code
+     *
+     * @param string $code Two letter ISO 3166-1 country code
+     *
+     * @return void
+     */
+    public function setCountryOfOrigin($code)
+    {
+        assert('is_string($code) && strlen($code) == 2 && ctype_alpha($code)');
+        $this->_countryOfOrigin = strtoupper($code);
+    }
+
+
+    /**
+     * Ǵet code for country of origin
+     *
+     * @return string
+     */
+    public function getCountryOfOrigin()
+    {
+        return $this->_countryOfOrigin;
+    }
+
+
+    /**
+     * Check if this is a domestic address
+     *
+     * @return bool
+     */
+    public function isDomestic()
+    {
+        return (
+            $this->getCountryCode() === ''
+            || $this->getCountryCode() === $this->getCountryOfOrigin()
+        );
+    }
+
+
+    /**
+     * Set type of delivery service
+     *
+     * @param string $service
+     *
+     * @return void
+     */
+    public function setDeliveryService($service)
+    {
+        assert('is_string($service)');
+        $this->_deliveryService = trim($service);
+    }
+
+
+    /**
+     * Get type of delivery service
+     *
+     * @return string
+     */
+    public function getDeliveryService()
+    {
+        return $this->_deliveryService;
+    }
+
+    /**
+     * Set specification of delivery service
+     *
+     * @param string $service
+     *
+     * @return void
+     */
+    public function setAlternateDeliveryService($service)
+    {
+        assert('is_string($service)');
+        $this->_alternateDeliveryService = trim($service);
+    }
+
+
+    /**
+     * Get specification of delivery service
+     *
+     * @return string
+     */
+    public function getAlternateDeliveryService()
+    {
+        return $this->_alternateDeliveryService;
+    }
+
+
+    /**
+     * Check if this is an administrative service point address
+     *
+     * @return bool
+     */
+    public function isServicePoint()
+    {
+        return $this->getDeliveryService() != '';
+    }
+
+
+    /**
+     * Check if this is a geographical address location
+     *
+     * @return bool
+     */
+    public function isDeliveryLocation()
+    {
+        return $this->getThoroughfare() != '';
+    }
+
+
+
+    // Här under har jag som inte börjat fixa ännu.....
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
     /**
@@ -411,7 +1101,8 @@ class Address
      * @param string $names
      * @return string
      */
-    static private function abbrNames($names){
+    static private function abbrNames($names)
+    {
         assert('is_string($names)');
 
         $arNames = explode(' ', $names);
