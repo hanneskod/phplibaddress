@@ -12,6 +12,7 @@
  * @package phplibaddress\Composer
  */
 namespace itbz\phplibaddress\Composer;
+use itbz\phplibaddress\Address;
 
 
 /**
@@ -21,6 +22,27 @@ namespace itbz\phplibaddress\Composer;
  */
 class Sv extends AbstractComposer
 {
+
+    /**
+     * Addresse breviator object
+     *
+     * @var Breviator
+     */
+    private $_breviator;
+
+
+    /**
+     * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
+     *
+     * @param Breviator $breviator Addresse breviator object
+     * @param Address $address Optional address object
+     */
+    public function __construct(Breviator $breviator, Address $address = NULL)
+    {
+        parent::__construct($address);
+        $this->_breviator = $breviator;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -36,7 +58,7 @@ class Sv extends AbstractComposer
         // Construct addressee
         $lines = array(
             mb_substr($this->_address->getOrganisationalUnit(), 0, 36),
-            self::concatNames(
+            $this->_breviator->concatenate(
                 $this->_address->getGivenName(),
                 $this->_address->getSurname(),
                 $this->_address->getForm()

@@ -17,22 +17,12 @@ class SvTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    function testNoCountryName()
-    {
-        $a = $this->getAddress();
-        $this->assertEquals(
-            '',
-            $a->getCountry()
-        );
-    }
-
-
     /**
      * @expectedException \itbz\phplibaddress\Exception
      */
     function testGetAddressException()
     {
-        $sv = new Sv;
+        $sv = new Sv(new Breviator);
         $sv->getAddress();
     }
 
@@ -40,16 +30,16 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetAddress()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);        
+        $sv = new Sv(new Breviator, $a);
 
-        $this->assertSame($a, $sv->getAddress());        
+        $this->assertSame($a, $sv->getAddress());
     }
 
 
     function testIsValid()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);        
+        $sv = new Sv(new Breviator, $a);
 
         $a->setThoroughfare('Very very very long street name 12345');
         $this->assertFalse($sv->isValid());
@@ -71,7 +61,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetValid()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);        
+        $sv = new Sv(new Breviator, $a);        
 
         $a->setThoroughfare('Very very very long street name 12345');
         $this->assertEquals(
@@ -97,70 +87,34 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetAddressee()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals('', $sv->getAddressee());
 
         $a->setForm('Mr');
         $a->setGivenName('Karl Hannes Gustav');
-        $a->setSurname('Forsgård');
-        $this->assertEquals(
-            'Mr Karl Hannes Gustav Forsgård',
-            $sv->getAddressee()
-        );
-
-        $a->setSurname('Forsgård Eriksson');
-        $this->assertEquals(
-            'Mr Karl H G Forsgård Eriksson',
-            $sv->getAddressee()
-        );
-
-        $a->setSurname('Forsgård Eriksson Eriksson');
-        $this->assertEquals(
-            'Mr Karl Forsgård Eriksson Eriksson',
-            $sv->getAddressee()
-        );
-
-        $a->setSurname('Forsgård Eriksson Eriksson Eriksson');
-        $this->assertEquals(
-            'Forsgård Eriksson Eriksson Eriksson',
-            $sv->getAddressee()
-        );
-
-        $a->setSurname('Forsgård Eriksson Eriksson Eriksson Eriksson');
-        $this->assertEquals(
-            'Eriksson Eriksson Eriksson Eriksson',
-            $sv->getAddressee()
-        );
-
-        $a->setSurname('Forsgård ErikssonErikssonErikssonErikssonEriksson');
-        $this->assertEquals(
-            'ErikssonErikssonErikssonErikssonErik',
-            $sv->getAddressee()
-        );
-
+        $a->setSurname('Forsgard');
         $a->setOrganisationalUnit('Unit');
-        $a->setSurname('Forsgård');
         $this->assertEquals(
-            "Unit\nMr Karl Hannes Gustav Forsgård",
+            "Unit\nMr Karl Hannes Gustav Forsgard",
             $sv->getAddressee()
         );
 
         $a->setOrganisationName('Itbrigaden');
         $this->assertEquals(
-            "Unit\nMr Karl Hannes Gustav Forsgård\nItbrigaden",
+            "Unit\nMr Karl Hannes Gustav Forsgard\nItbrigaden",
             $sv->getAddressee()
         );
 
         $a->setLegalStatus('AB');
         $this->assertEquals(
-            "Unit\nMr Karl Hannes Gustav Forsgård\nItbrigaden AB",
+            "Unit\nMr Karl Hannes Gustav Forsgard\nItbrigaden AB",
             $sv->getAddressee()
         );
 
         $a->setOrganisationName('Itbrigaden 1234567890123456789012345');
         $this->assertEquals(
-            "Unit\nMr Karl Hannes Gustav Forsgård\nItbrigaden 1234567890123456789012345",
+            "Unit\nMr Karl Hannes Gustav Forsgard\nItbrigaden 1234567890123456789012345",
             $sv->getAddressee()
         );
     }
@@ -169,7 +123,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetMailee()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals($sv->getMailee(), '');
 
@@ -184,7 +138,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetServicePoint()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals($sv->getServicePoint(), '');
 
@@ -200,7 +154,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetDeliveryLocation()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals('', $sv->getDeliveryLocation());
 
@@ -242,7 +196,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetLocality()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals('', $sv->getLocality());
 
@@ -266,7 +220,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testGetDeliveryPoint()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals('', $sv->getDeliveryPoint());
 
@@ -287,7 +241,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     function testFormat()
     {
         $a = $this->getAddress();
-        $sv = new Sv($a);
+        $sv = new Sv(new Breviator, $a);
 
         $this->assertEquals('', $sv->format());
 
@@ -304,22 +258,22 @@ class SvTest extends \PHPUnit_Framework_TestCase
         );
 
         $a->setGivenName('Hannes');
-        $a->setSurname('Forsgård');
+        $a->setSurname('Forsgard');
         $this->assertEquals(
-            "Hannes Forsgård\nc/o Foo Bar\nYostreet 1\n12345 xtown",
+            "Hannes Forsgard\nc/o Foo Bar\nYostreet 1\n12345 xtown",
             $sv->format()
         );
 
         $a->setOrganisationalUnit('Unit');
         $a->setOrganisationName('Itbrigaden');
         $this->assertEquals(
-            "Unit\nHannes Forsgård\nItbrigaden\nc/o Foo Bar\nYostreet 1\n12345 xtown",
+            "Unit\nHannes Forsgard\nItbrigaden\nc/o Foo Bar\nYostreet 1\n12345 xtown",
             $sv->format()
         );
 
         $a->setCountryCode('us');
         $this->assertEquals(
-            "Unit\nHannes Forsgård\nItbrigaden\nc/o Foo Bar\nYostreet 1\nUS-12345 xtown\nUnited States",
+            "Unit\nHannes Forsgard\nItbrigaden\nc/o Foo Bar\nYostreet 1\nUS-12345 xtown\nUnited States",
             $sv->format()
         );
     }

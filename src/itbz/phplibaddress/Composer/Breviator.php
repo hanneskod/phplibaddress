@@ -22,24 +22,6 @@ namespace itbz\phplibaddress\Composer;
 class Breviator
 {
 
-    /*
-        Ser bra ut
-
-        arbeta in så att detta object skickas med till Sv
-
-        byt så att sv använder denna klass för att forkorta namn
-
-        flytta ut testen för detta till ett eget testcase
-            så att jag kan behålla tydligheten..
-
-            egentligen borde jag kanske byta och skapa en AddressTest igen
-                testerna borde ju vara där när allt kommer omkring
-                men jag behöver kanske vara stoppa in det som är uppenbart
-                    (eg country...)
-
-     */
-
-
     /**
      * Concatenate given names, surname and titel
      * 
