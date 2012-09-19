@@ -19,7 +19,7 @@ use itbz\phplibaddress\Exception;
 /**
  * Compose complete addresses from address components
  *
- * @package phplibaddress
+ * @package phplibaddress\Composer
  */
 abstract class AbstractComposer
 {
