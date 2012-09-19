@@ -56,7 +56,7 @@ Usage
     */
 
 
-Documentation
--------------
+The complete documentation
+--------------------------
 
-Link to documentation...
+http://itbz.github.com/packages/phplibaddress.html
