@@ -49,19 +49,21 @@ class Sv extends AbstractComposer
      */
     public function getAddressee()
     {
+        $address = $this->getAddress();
+
         // Add legal status to name of organisation if possible
-        $org = mb_substr($this->_address->getOrganisationName(), 0, 36);
-        if (mb_strlen("$org {$this->_address->getLegalStatus()}") <= 36) {
-            $org = trim("$org {$this->_address->getLegalStatus()}");
+        $org = mb_substr($address->getOrganisationName(), 0, 36);
+        if (mb_strlen("$org {$address->getLegalStatus()}") <= 36) {
+            $org = trim("$org {$address->getLegalStatus()}");
         }
 
         // Construct addressee
         $lines = array(
-            mb_substr($this->_address->getOrganisationalUnit(), 0, 36),
+            mb_substr($address->getOrganisationalUnit(), 0, 36),
             $this->_breviator->concatenate(
-                $this->_address->getGivenName(),
-                $this->_address->getSurname(),
-                $this->_address->getForm()
+                $address->getGivenName(),
+                $address->getSurname(),
+                $address->getForm()
             ),
             $org
         );
@@ -75,7 +77,9 @@ class Sv extends AbstractComposer
      */
     public function getMailee()
     {
-        if ($this->_address->getNameOfMailee() == '') {
+        $address = $this->getAddress();
+
+        if ($address->getNameOfMailee() == '') {
             
             return '';
         }
@@ -83,8 +87,8 @@ class Sv extends AbstractComposer
         return trim(
             sprintf(
                 "%s %s",
-                $this->_address->getMaileeRoleDescriptor(),
-                $this->_address->getNameOfMailee()
+                $address->getMaileeRoleDescriptor(),
+                $address->getNameOfMailee()
             )
         );
     }
@@ -95,13 +99,15 @@ class Sv extends AbstractComposer
      */
     public function getLocality()
     {
-        if ($this->_address->isDomestic()) {
+        $address = $this->getAddress();
+
+        if ($address->isDomestic()) {
             
             return trim(
                 sprintf(
                     "%s %s",
-                    $this->_address->getPostcode(),
-                    $this->_address->getTown()
+                    $address->getPostcode(),
+                    $address->getTown()
                 )
             );
         } else {
@@ -109,11 +115,11 @@ class Sv extends AbstractComposer
             return trim(
                 sprintf(
                     "%s-%s %s%s%s",
-                    $this->_address->getCountryCode(),
-                    $this->_address->getPostcode(),
-                    $this->_address->getTown(),
+                    $address->getCountryCode(),
+                    $address->getPostcode(),
+                    $address->getTown(),
                     self::LINE_SEPARATOR,
-                    $this->_address->getCountry()
+                    $address->getCountry()
                 )
             );
         }
@@ -125,7 +131,9 @@ class Sv extends AbstractComposer
      */
     public function getServicePoint()
     {
-        if (!$this->_address->isServicePoint()) {
+        $address = $this->getAddress();
+
+        if (!$address->isServicePoint()) {
 
             return '';
         } else {
@@ -133,8 +141,8 @@ class Sv extends AbstractComposer
             return trim(
                 sprintf(
                     "%s %s",
-                    $this->_address->getDeliveryService(),
-                    $this->_address->getAlternateDeliveryService()
+                    $address->getDeliveryService(),
+                    $address->getAlternateDeliveryService()
                 )
             );
         }
@@ -146,22 +154,24 @@ class Sv extends AbstractComposer
      */
     public function getDeliveryLocation()
     {
-        if (!$this->_address->isDeliveryLocation()) {
+        $address = $this->getAddress();
+
+        if (!$address->isDeliveryLocation()) {
 
             return '';
         }
 
         $parts = array(
-            $this->_address->getThoroughfare(),
-            $this->_address->getPlot(),
-            $this->_address->getLittera(),
-            $this->_address->getStairwell()
+            $address->getThoroughfare(),
+            $address->getPlot(),
+            $address->getLittera(),
+            $address->getStairwell()
         );
 
-        if ($this->_address->getDoor() != '') {
-            $parts[] = "lgh {$this->_address->getDoor()}";
+        if ($address->getDoor() != '') {
+            $parts[] = "lgh {$address->getDoor()}";
         } else {
-            $parts[] = $this->_address->getFloor();
+            $parts[] = $address->getFloor();
         }
 
         $parts = array_filter($parts);
@@ -176,8 +186,8 @@ class Sv extends AbstractComposer
         // Else include supplementary delivery point above the thoroughfare
         } else {
             $lines = array(implode(' ', $parts));
-            if ($this->_address->getSupplementaryData() != '') {
-                array_unshift($lines, $this->_address->getSupplementaryData());
+            if ($address->getSupplementaryData() != '') {
+                array_unshift($lines, $address->getSupplementaryData());
             }
         }
 
@@ -190,7 +200,9 @@ class Sv extends AbstractComposer
      */
     public function getDeliveryPoint()
     {
-        if ($this->_address->isServicePoint()) {
+        $address = $this->getAddress();
+
+        if ($address->isServicePoint()) {
             $point = $this->getServicePoint();
         } else {
             $point = $this->getDeliveryLocation();

@@ -35,7 +35,7 @@ abstract class AbstractComposer
      *
      * @var Address
      */
-    protected $_address;
+    private $_address;
 
 
     /**
