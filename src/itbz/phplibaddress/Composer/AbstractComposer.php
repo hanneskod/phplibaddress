@@ -119,6 +119,19 @@ abstract class AbstractComposer
 
 
     /**
+     * Deep clone address container
+     *
+     * @return void
+     */
+    public function __clone()
+    {
+        if (isset($this->_address)) {
+            $this->_address = clone $this->_address;
+        }
+    }
+
+
+    /**
      * Set address container
      *
      * @param Address $address

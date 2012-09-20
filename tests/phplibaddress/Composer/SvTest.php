@@ -36,6 +36,21 @@ class SvTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    function testClone()
+    {
+        $address = $this->getAddress();
+        $sv = new Sv(new Breviator, $address);
+        $clone = clone $sv;
+
+        $address->setGivenName('foobar');
+
+        $this->assertFalse(
+            $sv->getAddressee() == $clone->getAddressee(),
+            'Clone should not referense the same object'
+        );
+    }
+
+
     function testIsValid()
     {
         $a = $this->getAddress();
