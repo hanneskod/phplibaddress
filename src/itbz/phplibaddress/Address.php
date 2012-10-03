@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- *
  * @package phplibaddress
  */
+
 namespace itbz\phplibaddress;
+
 use itbz\phpcountry\Country;
 use itbz\phpcountry\TranslationException;
-
 
 /**
  * Base container of address parts
@@ -23,182 +23,159 @@ use itbz\phpcountry\TranslationException;
  */
 class Address
 {
-
     /**
      * Address form
      * 
      * @var string
      */
-    private $_form = '';
-
+    private $form = '';
 
     /**
      * Address given name
      *
      * @var string
      */
-    private $_givenName = '';
-
+    private $givenName = '';
 
     /**
      * Address surname
      *
      * @var string
      */
-    private $_surname = '';
-
+    private $surname = '';
 
     /**
      * Address name of organisation
      * 
      * @var string
      */
-    private $_organisationName = '';
-
+    private $organisationName = '';
 
     /**
      * Address legal status
      * 
      * @var string
      */
-    private $_legalStatus = '';
-
+    private $legalStatus = '';
 
     /**
      * Address organisational unit
      * 
      * @var string
      */
-    private $_organisationalUnit = '';
-
+    private $organisationalUnit = '';
 
     /**
      * Address name of mailee
      * 
      * @var string
      */
-    private $_mailee = '';
-
+    private $mailee = '';
 
     /**
      * Address mailee role descriptor
      * 
      * @var string
      */
-    private $_maileeRoleDescriptor = 'c/o';
-
+    private $maileeRoleDescriptor = 'c/o';
 
     /**
      * Type of delivery service
      *
      * @var string
      */
-    private $_deliveryService = '';
-
+    private $deliveryService = '';
 
     /**
      * Specification of delivery service
      *
      * @var string
      */
-    private $_alternateDeliveryService = '';
-
+    private $alternateDeliveryService = '';
 
     /**
      * Address thoroughfare (street name)
      *
      * @var string
      */
-    private $_thoroughfare = '';
-
+    private $thoroughfare = '';
 
     /**
      * Address plot (street number)
      *
      * @var string
      */
-    private $_plot = '';
-
+    private $plot = '';
 
     /**
      * Address littera (letter)
      *
      * @var string
      */
-    private $_littera = '';
-
+    private $littera = '';
 
     /**
      * Address stairwell
      *
      * @var string
      */
-    private $_stairwell = '';
-
+    private $stairwell = '';
 
     /**
      * Address door (apartment number)
      *
      * @var string
      */
-    private $_door = '';
-
+    private $door = '';
 
     /**
      * Address floor
      *
      * @var string
      */
-    private $_floor = '';
-
+    private $floor = '';
 
     /**
      * Address supplementary data
      *
      * @var string
      */
-    private $_supplementaryDeliveryPointData = '';
-
+    private $supplementaryDeliveryPointData = '';
 
     /**
      * Address postcode (zip code)
      *
      * @var string
      */
-    private $_postcode = '';
-
+    private $postcode = '';
 
     /**
      * Address town
      *
      * @var string
      */
-    private $_town = '';
-
+    private $town = '';
 
     /**
      * ISO 3166-1 country code translator
      *
      * @var Country
      */
-    private $_countryCodes;
-
+    private $countryCodes;
 
     /**
      * ISO 3166 alpha 2 destination country code
      *
      * @var string
      */
-    private $_country = '';
-
+    private $country = '';
 
     /**
      * ISO 3166 alpha 2 origin country code
      *
      * @var string
      */
-    private $_countryOfOrigin = '';
-
+    private $countryOfOrigin = '';
 
     /**
      * Base container of address parts
@@ -209,9 +186,8 @@ class Address
      */
     public function __construct(Country $countryCodeTranslator)
     {
-        $this->_countryCodes = $countryCodeTranslator;
+        $this->countryCodes = $countryCodeTranslator;
     }
-
 
     /**
      * Get form
@@ -220,10 +196,9 @@ class Address
      */
     public function getForm()
     {
-        return $this->_form;
+        return $this->form;
     }
-    
-    
+
     /**
      * Set form
      *
@@ -234,9 +209,8 @@ class Address
     public function setForm($form)
     {
         assert('is_string($form)');
-        $this->_form = $form;
+        $this->form = $form;
     }
-    
 
     /**
      * Get given name
@@ -245,10 +219,9 @@ class Address
      */
     public function getGivenName()
     {
-        return $this->_givenName;
+        return $this->givenName;
     }
-    
-    
+
     /**
      * Set given name
      *
@@ -259,9 +232,8 @@ class Address
     public function setGivenName($givenName)
     {
         assert('is_string($givenName)');
-        $this->_givenName = $givenName;
+        $this->givenName = $givenName;
     }
-    
 
     /**
      * Get surname
@@ -270,10 +242,9 @@ class Address
      */
     public function getSurname()
     {
-        return $this->_surname;
+        return $this->surname;
     }
-    
-    
+
     /**
      * Set surname
      *
@@ -284,9 +255,8 @@ class Address
     public function setSurname($surname)
     {
         assert('is_string($surname)');
-        $this->_surname = $surname;
+        $this->surname = $surname;
     }
-    
 
     /**
      * Get name of organisation
@@ -295,10 +265,9 @@ class Address
      */
     public function getOrganisationName()
     {
-        return $this->_organisationName;
+        return $this->organisationName;
     }
-    
-    
+
     /**
      * Set name of organisation
      *
@@ -309,9 +278,8 @@ class Address
     public function setOrganisationName($organisationName)
     {
         assert('is_string($organisationName)');
-        $this->_organisationName = $organisationName;
+        $this->organisationName = $organisationName;
     }
-    
 
     /**
      * Get legal status
@@ -320,10 +288,9 @@ class Address
      */
     public function getLegalStatus()
     {
-        return $this->_legalStatus;
+        return $this->legalStatus;
     }
-    
-    
+
     /**
      * Set legal status
      *
@@ -334,9 +301,8 @@ class Address
     public function setLegalStatus($legalStatus)
     {
         assert('is_string($legalStatus)');
-        $this->_legalStatus = $legalStatus;
+        $this->legalStatus = $legalStatus;
     }
-    
 
     /**
      * Get organisational unit
@@ -345,10 +311,9 @@ class Address
      */
     public function getOrganisationalUnit()
     {
-        return $this->_organisationalUnit;
+        return $this->organisationalUnit;
     }
-    
-    
+
     /**
      * Set organisational unit
      *
@@ -359,9 +324,8 @@ class Address
     public function setOrganisationalUnit($organisationalUnit)
     {
         assert('is_string($organisationalUnit)');
-        $this->_organisationalUnit = $organisationalUnit;
+        $this->organisationalUnit = $organisationalUnit;
     }
-    
 
     /**
      * Get name of mailee
@@ -370,10 +334,9 @@ class Address
      */
     public function getNameOfMailee()
     {
-        return $this->_mailee;
+        return $this->mailee;
     }
-    
-    
+
     /**
      * Set name of mailee
      *
@@ -384,9 +347,8 @@ class Address
     public function setNameOfMailee($mailee)
     {
         assert('is_string($mailee)');
-        $this->_mailee = $mailee;
+        $this->mailee = $mailee;
     }
-    
 
     /**
      * Get mailee role descriptor
@@ -395,10 +357,9 @@ class Address
      */
     public function getMaileeRoleDescriptor()
     {
-        return $this->_maileeRoleDescriptor;
+        return $this->maileeRoleDescriptor;
     }
-    
-    
+
     /**
      * Set mailee role descriptor
      *
@@ -409,9 +370,8 @@ class Address
     public function setMaileeRoleDescriptor($maileeRoleDescriptor)
     {
         assert('is_string($maileeRoleDescriptor)');
-        $this->_maileeRoleDescriptor = $maileeRoleDescriptor;
+        $this->maileeRoleDescriptor = $maileeRoleDescriptor;
     }
-
 
     /**
      * Get thoroughfare (street name)
@@ -420,10 +380,9 @@ class Address
      */
     public function getThoroughfare()
     {
-        return $this->_thoroughfare;
+        return $this->thoroughfare;
     }
-    
-    
+
     /**
      * Set thoroughfare (street name)
      *
@@ -434,9 +393,8 @@ class Address
     public function setThoroughfare($thoroughfare)
     {
         assert('is_string($thoroughfare)');
-        $this->_thoroughfare = $thoroughfare;
+        $this->thoroughfare = $thoroughfare;
     }
-    
 
     /**
      * Get plot (street number)
@@ -445,10 +403,9 @@ class Address
      */
     public function getPlot()
     {
-        return $this->_plot;
+        return $this->plot;
     }
-    
-    
+
     /**
      * Set plot (street number)
      *
@@ -459,9 +416,8 @@ class Address
     public function setPlot($plot)
     {
         assert('is_string($plot)');
-        $this->_plot = $plot;
+        $this->plot = $plot;
     }
-    
 
     /**
      * Get littera (letter)
@@ -470,10 +426,9 @@ class Address
      */
     public function getLittera()
     {
-        return $this->_littera;
+        return $this->littera;
     }
-    
-    
+
     /**
      * Set littera (letter)
      *
@@ -484,9 +439,8 @@ class Address
     public function setLittera($littera)
     {
         assert('is_string($littera)');
-        $this->_littera = $littera;
+        $this->littera = $littera;
     }
-    
 
     /**
      * Get stairwell
@@ -495,10 +449,9 @@ class Address
      */
     public function getStairwell()
     {
-        return $this->_stairwell;
+        return $this->stairwell;
     }
-    
-    
+
     /**
      * Set stairwell
      *
@@ -509,9 +462,8 @@ class Address
     public function setStairwell($stairwell)
     {
         assert('is_string($stairwell)');
-        $this->_stairwell = $stairwell;
+        $this->stairwell = $stairwell;
     }
-    
 
     /**
      * Get door (apartment number)
@@ -520,10 +472,9 @@ class Address
      */
     public function getDoor()
     {
-        return $this->_door;
+        return $this->door;
     }
-    
-    
+
     /**
      * Set door (apartment number)
      *
@@ -534,9 +485,8 @@ class Address
     public function setDoor($door)
     {
         assert('is_string($door)');
-        $this->_door = $door;
+        $this->door = $door;
     }
-    
 
     /**
      * Get floor
@@ -545,10 +495,9 @@ class Address
      */
     public function getFloor()
     {
-        return $this->_floor;
+        return $this->floor;
     }
-    
-    
+
     /**
      * Set floor
      *
@@ -559,9 +508,8 @@ class Address
     public function setFloor($floor)
     {
         assert('is_string($floor)');
-        $this->_floor = $floor;
+        $this->floor = $floor;
     }
-
 
     /**
      * Get supplementary delivery point information
@@ -570,10 +518,9 @@ class Address
      */
     public function getSupplementaryData()
     {
-        return $this->_supplementaryDeliveryPointData;
+        return $this->supplementaryDeliveryPointData;
     }
-    
-    
+
     /**
      * Set supplementary delivery point information
      *
@@ -584,9 +531,8 @@ class Address
     public function setSupplementaryData($supplementaryData)
     {
         assert('is_string($supplementaryData)');
-        $this->_supplementaryDeliveryPointData = $supplementaryData;
+        $this->supplementaryDeliveryPointData = $supplementaryData;
     }
-    
 
     /**
      * Get postcode (zip code)
@@ -595,10 +541,9 @@ class Address
      */
     public function getPostcode()
     {
-        return $this->_postcode;
+        return $this->postcode;
     }
-    
-    
+
     /**
      * Set postcode (zip code)
      *
@@ -609,9 +554,8 @@ class Address
     public function setPostcode($postcode)
     {
         assert('is_string($postcode)');
-        $this->_postcode = $postcode;
+        $this->postcode = $postcode;
     }
-    
 
     /**
      * Get town
@@ -620,10 +564,9 @@ class Address
      */
     public function getTown()
     {
-        return $this->_town;
+        return $this->town;
     }
-    
-    
+
     /**
      * Set town
      *
@@ -634,9 +577,8 @@ class Address
     public function setTown($town)
     {
         assert('is_string($town)');
-        $this->_town = $town;
+        $this->town = $town;
     }
-
 
     /**
      * Set destination country code
@@ -648,9 +590,8 @@ class Address
     public function setCountryCode($code)
     {
         assert('is_string($code) && strlen($code) == 2 && ctype_alpha($code)');
-        $this->_country = strtoupper($code);
+        $this->country = strtoupper($code);
     }
-
 
     /**
      * Ǵet current destination country code
@@ -659,9 +600,8 @@ class Address
      */
     public function getCountryCode()
     {
-        return $this->_country;
+        return $this->country;
     }
-
 
     /**
      * Get name of country
@@ -671,14 +611,13 @@ class Address
     public function getCountry()
     {
         try {
-            
-            return $this->_countryCodes->translate($this->getCountryCode());
+
+            return $this->countryCodes->translate($this->getCountryCode());
         } catch (TranslationException $e) {
-            
+
             return '';
         }
     }
-
 
     /**
      * Set orogin country code
@@ -690,9 +629,8 @@ class Address
     public function setCountryOfOrigin($code)
     {
         assert('is_string($code) && strlen($code) == 2 && ctype_alpha($code)');
-        $this->_countryOfOrigin = strtoupper($code);
+        $this->countryOfOrigin = strtoupper($code);
     }
-
 
     /**
      * Ǵet code for country of origin
@@ -701,9 +639,8 @@ class Address
      */
     public function getCountryOfOrigin()
     {
-        return $this->_countryOfOrigin;
+        return $this->countryOfOrigin;
     }
-
 
     /**
      * Check if this is a domestic address
@@ -718,7 +655,6 @@ class Address
         );
     }
 
-
     /**
      * Set type of delivery service
      *
@@ -729,9 +665,8 @@ class Address
     public function setDeliveryService($service)
     {
         assert('is_string($service)');
-        $this->_deliveryService = trim($service);
+        $this->deliveryService = trim($service);
     }
-
 
     /**
      * Get type of delivery service
@@ -740,7 +675,7 @@ class Address
      */
     public function getDeliveryService()
     {
-        return $this->_deliveryService;
+        return $this->deliveryService;
     }
 
     /**
@@ -753,9 +688,8 @@ class Address
     public function setAlternateDeliveryService($service)
     {
         assert('is_string($service)');
-        $this->_alternateDeliveryService = trim($service);
+        $this->alternateDeliveryService = trim($service);
     }
-
 
     /**
      * Get specification of delivery service
@@ -764,9 +698,8 @@ class Address
      */
     public function getAlternateDeliveryService()
     {
-        return $this->_alternateDeliveryService;
+        return $this->alternateDeliveryService;
     }
-
 
     /**
      * Check if this is an administrative service point address
@@ -778,7 +711,6 @@ class Address
         return $this->getDeliveryService() != '';
     }
 
-
     /**
      * Check if this is a geographical address location
      *
@@ -788,5 +720,4 @@ class Address
     {
         return $this->getThoroughfare() != '';
     }
-
 }

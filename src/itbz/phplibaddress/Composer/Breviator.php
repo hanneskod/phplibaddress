@@ -8,11 +8,10 @@
  * file that was distributed with this source code.
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- *
  * @package phplibaddress\Composer
  */
-namespace itbz\phplibaddress\Composer;
 
+namespace itbz\phplibaddress\Composer;
 
 /**
  * Abbreviate addressee information to fit within 26 characters
@@ -21,7 +20,6 @@ namespace itbz\phplibaddress\Composer;
  */
 class Breviator
 {
-
     /**
      * Concatenate given names, surname and titel
      * 
@@ -49,12 +47,12 @@ class Breviator
             if (mb_strlen($names) > 0) {
                 $names = $this->abbrNames($names);
 
-            // Elise remove title if it exists
             } elseif (mb_strlen($title) > 0) {
+                // Else remove title if it exists
                 $title = '';
 
-            // Else remove one surname
             } else {
+                // Else remove one surname
                 $newSurname = preg_replace("/^[^ ]* (.*)$/", "$1", $surname);
                 if (mb_strlen($newSurname) >= mb_strlen($surname)) {
 
@@ -66,11 +64,10 @@ class Breviator
 
             return $this->concatenate($names, $surname, $title);
         }
-    
+
         // Break recursion
         return $fullname;
     }
-
 
     /**
      * Shorten a string of names
@@ -82,13 +79,13 @@ class Breviator
     private function abbrNames($names)
     {
         $arNames = explode(' ', $names);
-    
+
         // If there is only one name, push it to second position
         if (count($arNames) == 1) {
             $arNames[1] = $arNames[0];
             unset($arNames[0]);
         }
-    
+
         // Shorten or remove names, leave first name
         foreach ($arNames as $key => &$name) {
             if ($key == 0) {
@@ -99,14 +96,14 @@ class Breviator
             if (mb_strlen($name) == 1) {
                 unset($arNames[$key]);
 
-            // Else create initials from complete names
             } else {
+                // Else create initials from complete names
                 $name = trim($name);
                 $name = mb_substr($name, 0, 1);
                 $name = mb_strtoupper($name);
             }
         }
-    
+
         $newNames = implode(' ', $arNames);
 
         // Assert that the returned string really is shorter
@@ -114,5 +111,4 @@ class Breviator
 
         return $newNames;
     }
-
 }

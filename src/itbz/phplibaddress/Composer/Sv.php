@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- *
  * @package phplibaddress\Composer
  */
-namespace itbz\phplibaddress\Composer;
-use itbz\phplibaddress\Address;
 
+namespace itbz\phplibaddress\Composer;
+
+use itbz\phplibaddress\Address;
 
 /**
  * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
@@ -22,14 +22,12 @@ use itbz\phplibaddress\Address;
  */
 class Sv extends AbstractComposer
 {
-
     /**
      * Addresse breviator object
      *
      * @var Breviator
      */
-    private $_breviator;
-
+    private $breviator;
 
     /**
      * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
@@ -37,12 +35,11 @@ class Sv extends AbstractComposer
      * @param Breviator $breviator Addresse breviator object
      * @param Address $address Optional address object
      */
-    public function __construct(Breviator $breviator, Address $address = NULL)
+    public function __construct(Breviator $breviator, Address $address = null)
     {
         parent::__construct($address);
-        $this->_breviator = $breviator;
+        $this->breviator = $breviator;
     }
-
 
     /**
      * {@inheritdoc}
@@ -60,7 +57,7 @@ class Sv extends AbstractComposer
         // Construct addressee
         $lines = array(
             mb_substr($address->getOrganisationalUnit(), 0, 36),
-            $this->_breviator->concatenate(
+            $this->breviator->concatenate(
                 $address->getGivenName(),
                 $address->getSurname(),
                 $address->getForm()
@@ -71,7 +68,6 @@ class Sv extends AbstractComposer
         return implode(self::LINE_SEPARATOR, array_filter($lines));
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -80,7 +76,7 @@ class Sv extends AbstractComposer
         $address = $this->getAddress();
 
         if ($address->getNameOfMailee() == '') {
-            
+
             return '';
         }
 
@@ -93,7 +89,6 @@ class Sv extends AbstractComposer
         );
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -102,7 +97,7 @@ class Sv extends AbstractComposer
         $address = $this->getAddress();
 
         if ($address->isDomestic()) {
-            
+
             return trim(
                 sprintf(
                     "%s %s",
@@ -111,7 +106,7 @@ class Sv extends AbstractComposer
                 )
             );
         } else {
-            
+
             return trim(
                 sprintf(
                     "%s-%s %s%s%s",
@@ -124,7 +119,6 @@ class Sv extends AbstractComposer
             );
         }
     }
-
 
     /**
      * {@inheritdoc}
@@ -147,7 +141,6 @@ class Sv extends AbstractComposer
             );
         }
     }
-
 
     /**
      * {@inheritdoc}
@@ -183,8 +176,8 @@ class Sv extends AbstractComposer
                 implode(' ', $parts)
             );
 
-        // Else include supplementary delivery point above the thoroughfare
         } else {
+            // Else include supplementary delivery point above the thoroughfare
             $lines = array(implode(' ', $parts));
             if ($address->getSupplementaryData() != '') {
                 array_unshift($lines, $address->getSupplementaryData());
@@ -193,7 +186,6 @@ class Sv extends AbstractComposer
 
         return trim(implode(self::LINE_SEPARATOR, $lines));
     }
-
 
     /**
      * {@inheritdoc}
@@ -218,7 +210,6 @@ class Sv extends AbstractComposer
         );
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -232,5 +223,4 @@ class Sv extends AbstractComposer
 
         return implode(self::LINE_SEPARATOR, array_filter($addr));
     }
-
 }

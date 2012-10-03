@@ -8,11 +8,10 @@
  * file that was distributed with this source code.
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- *
  * @package phplibaddress
  */
-namespace itbz\phplibaddress;
 
+namespace itbz\phplibaddress;
 
 /**
  * Package base exception

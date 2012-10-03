@@ -1,11 +1,9 @@
 <?php
 namespace itbz\phplibaddress\Composer;
 
-
 class BreviatorTest extends \PHPUnit_Framework_TestCase
 {
-
-    function testConcatenate()
+    public function testConcatenate()
     {
         $brev = new Breviator;
 
@@ -63,5 +61,4 @@ class BreviatorTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-
 }

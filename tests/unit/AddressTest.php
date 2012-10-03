@@ -1,12 +1,11 @@
 <?php
 namespace itbz\phplibaddress;
-use itbz\phpcountry\Country;
 
+use itbz\phpcountry\Country;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
-
-    function getAddress()
+    public function getAddress()
     {
         $country = new Country;
         $country->setLang('en');
@@ -15,8 +14,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         return $addr;
     }
 
-
-    function testNoCountryName()
+    public function testNoCountryName()
     {
         $a = $this->getAddress();
         $this->assertEquals(
@@ -24,5 +22,4 @@ class AddressTest extends \PHPUnit_Framework_TestCase
             $a->getCountry()
         );
     }
-
 }

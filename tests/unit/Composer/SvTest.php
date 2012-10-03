@@ -1,13 +1,12 @@
 <?php
 namespace itbz\phplibaddress\Composer;
+
 use itbz\phpcountry\Country;
 use itbz\phplibaddress\Address;
 
-
 class SvTest extends \PHPUnit_Framework_TestCase
 {
-
-    function getAddress()
+    public function getAddress()
     {
         $country = new Country;
         $country->setLang('en');
@@ -16,27 +15,23 @@ class SvTest extends \PHPUnit_Framework_TestCase
         return $addr;
     }
 
-
     /**
      * @expectedException \itbz\phplibaddress\Exception
      */
-    function testGetAddressException()
+    public function testGetAddressException()
     {
         $sv = new Sv(new Breviator);
         $sv->getAddress();
     }
 
-
-    function testGetAddress()
+    public function testGetAddress()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
-
         $this->assertSame($a, $sv->getAddress());
     }
 
-
-    function testClone()
+    public function testClone()
     {
         $address = $this->getAddress();
         $sv = new Sv(new Breviator, $address);
@@ -50,8 +45,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
-    function testIsValid()
+    public function testIsValid()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -72,11 +66,10 @@ class SvTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($sv->isValid());
     }
 
-
-    function testGetValid()
+    public function testGetValid()
     {
         $a = $this->getAddress();
-        $sv = new Sv(new Breviator, $a);        
+        $sv = new Sv(new Breviator, $a);
 
         $a->setThoroughfare('Very very very long street name 12345');
         $this->assertEquals(
@@ -98,8 +91,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
-    function testGetAddressee()
+    public function testGetAddressee()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -134,8 +126,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
-    function testGetMailee()
+    public function testGetMailee()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -149,8 +140,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar Foo Bar', $sv->getMailee());
     }
 
-    
-    function testGetServicePoint()
+    public function testGetServicePoint()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -165,8 +155,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Box 123', $sv->getServicePoint());
     }
 
-
-    function testGetDeliveryLocation()
+    public function testGetDeliveryLocation()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -181,7 +170,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
 
         $a->setLittera('A');
         $this->assertEquals('Yostreet 1 A', $sv->getDeliveryLocation());
-        
+
         $a->setStairwell('UH');
         $this->assertEquals('Yostreet 1 A UH', $sv->getDeliveryLocation());
 
@@ -207,8 +196,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
-    function testGetLocality()
+    public function testGetLocality()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -223,7 +211,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
 
         $a->setCountryCode('us');
         $this->assertEquals("US-12345 xtown\nUnited States", $sv->getLocality());
-        
+
         $a->setCountryOfOrigin('SE');
         $this->assertEquals("US-12345 xtown\nUnited States", $sv->getLocality());
 
@@ -231,8 +219,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("12345 xtown", $sv->getLocality());
     }
 
-
-    function testGetDeliveryPoint()
+    public function testGetDeliveryPoint()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -252,8 +239,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Box 123\n12345 xtown", $sv->getDeliveryPoint());
     }
 
-
-    function testFormat()
+    public function testFormat()
     {
         $a = $this->getAddress();
         $sv = new Sv(new Breviator, $a);
@@ -292,5 +278,4 @@ class SvTest extends \PHPUnit_Framework_TestCase
             $sv->format()
         );
     }
-
 }

@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  *
  * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- *
  * @package phplibaddress\Composer
  */
+
 namespace itbz\phplibaddress\Composer;
+
 use itbz\phplibaddress\Address;
 use itbz\phplibaddress\Exception;
-
 
 /**
  * Compose complete addresses from address components
@@ -23,20 +23,17 @@ use itbz\phplibaddress\Exception;
  */
 abstract class AbstractComposer
 {
-
     /**
      * Character used to separate lines
      */
     const LINE_SEPARATOR = "\n";
-
 
     /**
      * Internal address container
      *
      * @var Address
      */
-    private $_address;
-
+    private $address;
 
     /**
      * Get formatted address
@@ -45,14 +42,12 @@ abstract class AbstractComposer
      */
     abstract public function format();
 
-
     /**
      * Get addresse (recipient)
      *
      * @return string
      */
     abstract public function getAddressee();
-
 
     /**
      * Get mailee (including role descriptor)
@@ -61,8 +56,7 @@ abstract class AbstractComposer
      */
     abstract public function getMailee();
 
- 
-     /**
+    /**
      * Get formatted locality
      *
      * If the address is not domestic country code and name are included.
@@ -70,7 +64,6 @@ abstract class AbstractComposer
      * @return string
      */
     abstract public function getLocality();
-
 
     /**
      * Get administrative service point address
@@ -82,7 +75,6 @@ abstract class AbstractComposer
      */
     abstract public function getServicePoint();
 
-
     /**
      * Get geographical address location
      *
@@ -91,7 +83,6 @@ abstract class AbstractComposer
      * @return string
      */
     abstract public function getDeliveryLocation();
-
 
     /**
      * Get the delivery point address.
@@ -103,20 +94,18 @@ abstract class AbstractComposer
      * @return string
      */
     abstract public function getDeliveryPoint();
- 
 
     /**
      * Optionally load address container at construct
      *
      * @param Address $address
      */
-    public function __construct(Address $address = NULL)
+    public function __construct(Address $address = null)
     {
         if ($address) {
             $this->setAddress($address);
         }
     }
-
 
     /**
      * Deep clone address container
@@ -125,11 +114,10 @@ abstract class AbstractComposer
      */
     public function __clone()
     {
-        if (isset($this->_address)) {
-            $this->_address = clone $this->_address;
+        if (isset($this->address)) {
+            $this->address = clone $this->address;
         }
     }
-
 
     /**
      * Set address container
@@ -140,9 +128,8 @@ abstract class AbstractComposer
      */
     public function setAddress(Address $address)
     {
-        $this->_address = $address;
+        $this->address = $address;
     }
-
 
     /**
      * Get internal address container
@@ -151,14 +138,13 @@ abstract class AbstractComposer
      */
     public function getAddress()
     {
-        if (!isset($this->_address)) {
+        if (!isset($this->address)) {
             $msg = "No address loaded.";
             throw new Exception($msg);
         }
 
-        return $this->_address;
+        return $this->address;
     }
-
 
     /**
      * Check if address is syntactically valid
@@ -173,19 +159,18 @@ abstract class AbstractComposer
         $addr = explode(self::LINE_SEPARATOR, $this->format());
         if (count($addr) > 6) {
 
-            return FALSE;
+            return false;
         }
 
         foreach ($addr as $line) {
             if (mb_strlen($line) > 36) {
 
-                return FALSE;
+                return false;
             }
         }
-        
-        return TRUE;
-    }
 
+        return true;
+    }
 
     /**
      * Get formatted and sanitized address
@@ -198,18 +183,17 @@ abstract class AbstractComposer
     public function getValid()
     {
         $addr = explode(self::LINE_SEPARATOR, $this->format());
-        
+
         // Remove lines if more than 6
         while (count($addr) > 6) {
             array_shift($addr);
         }
-        
+
         // Force line lengths
         foreach ($addr as &$line) {
-            $line = mb_substr($line, 0, 36);        
+            $line = mb_substr($line, 0, 36);
         }
-        
+
         return implode(self::LINE_SEPARATOR, $addr);
     }
-
 }
