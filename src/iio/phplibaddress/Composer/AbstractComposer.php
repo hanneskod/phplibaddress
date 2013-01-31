@@ -11,10 +11,10 @@
  * @package phplibaddress\Composer
  */
 
-namespace itbz\phplibaddress\Composer;
+namespace iio\phplibaddress\Composer;
 
-use itbz\phplibaddress\Address;
-use itbz\phplibaddress\Exception;
+use iio\phplibaddress\Address;
+use iio\phplibaddress\Exception;
 
 /**
  * Compose complete addresses from address components

@@ -1,5 +1,5 @@
 <?php
-namespace itbz\phplibaddress\Composer;
+namespace iio\phplibaddress\Composer;
 
 class BreviatorTest extends \PHPUnit_Framework_TestCase
 {

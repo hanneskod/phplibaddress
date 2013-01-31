@@ -11,10 +11,10 @@
  * @package phplibaddress
  */
 
-namespace itbz\phplibaddress;
+namespace iio\phplibaddress;
 
-use itbz\phpcountry\Country;
-use itbz\phpcountry\TranslationException;
+use iio\phpcountry\Country;
+use iio\phpcountry\TranslationException;
 
 /**
  * Base container of address parts

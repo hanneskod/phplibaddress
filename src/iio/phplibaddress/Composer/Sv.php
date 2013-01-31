@@ -11,9 +11,9 @@
  * @package phplibaddress\Composer
  */
 
-namespace itbz\phplibaddress\Composer;
+namespace iio\phplibaddress\Composer;
 
-use itbz\phplibaddress\Address;
+use iio\phplibaddress\Address;
 
 /**
  * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3

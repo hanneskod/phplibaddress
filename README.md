@@ -20,10 +20,10 @@ using the composer auto-loader.
 Usage
 -----
 
-    namespace itbz\phplibaddress;
-    use itbz\phpcountry\Country;
-    use itbz\phplibaddress\Composer\Sv;
-    use itbz\phplibaddress\Composer\Breviator;
+    namespace iio\phplibaddress;
+    use iio\phpcountry\Country;
+    use iio\phplibaddress\Composer\Sv;
+    use iio\phplibaddress\Composer\Breviator;
 
     $country = new Country;
     $country->setLang('en');
@@ -54,9 +54,3 @@ Usage
     Sweden
      
     */
-
-
-The complete documentation
---------------------------
-
-http://itbz.github.com/packages/phplibaddress.html

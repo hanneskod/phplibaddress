@@ -11,7 +11,7 @@
  * @package phplibaddress
  */
 
-namespace itbz\phplibaddress;
+namespace iio\phplibaddress;
 
 /**
  * Package base exception

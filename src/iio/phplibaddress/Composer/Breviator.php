@@ -11,7 +11,7 @@
  * @package phplibaddress\Composer
  */
 
-namespace itbz\phplibaddress\Composer;
+namespace iio\phplibaddress\Composer;
 
 /**
  * Abbreviate addressee information to fit within 26 characters

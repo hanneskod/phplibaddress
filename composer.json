@@ -1,8 +1,8 @@
 {
-    "name": "itbz/phplibaddress",
+    "name": "iio/phplibaddress",
     "description": "Model postal addresses as of Swedish standard SS 613401:2011 ed. 3",
     "keywords": ["postal address"],
-    "homepage": "https://github.com/itbz/phplibaddress",
+    "homepage": "https://github.com/iio/phplibaddress",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -13,11 +13,12 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "itbz/phpcountry": ">=0.2.0"
+        "iio/phpcountry": ">=0.3.0"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "itbz\\phplibaddress": "src/"
+            "iio\\phplibaddress": "src/"
         }
     }
 }

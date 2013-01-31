@@ -1,8 +1,8 @@
 <?php
-namespace itbz\phplibaddress\Composer;
+namespace iio\phplibaddress\Composer;
 
-use itbz\phpcountry\Country;
-use itbz\phplibaddress\Address;
+use iio\phpcountry\Country;
+use iio\phplibaddress\Address;
 
 class SvTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class SvTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \itbz\phplibaddress\Exception
+     * @expectedException \iio\phplibaddress\Exception
      */
     public function testGetAddressException()
     {

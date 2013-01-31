@@ -1,7 +1,7 @@
 <?php
-namespace itbz\phplibaddress;
+namespace iio\phplibaddress;
 
-use itbz\phpcountry\Country;
+use iio\phpcountry\Country;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
