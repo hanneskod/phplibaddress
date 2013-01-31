@@ -6,9 +6,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- * @package phplibaddress\Composer
  */
 
 namespace iio\phplibaddress\Composer;
@@ -19,7 +16,8 @@ use iio\phplibaddress\Exception;
 /**
  * Compose complete addresses from address components
  *
- * @package phplibaddress\Composer
+ * @author  Hannes Forsgård <hannes.forsgard@gmail.com>
+ * @package phplibaddress
  */
 abstract class AbstractComposer
 {
@@ -29,9 +27,7 @@ abstract class AbstractComposer
     const LINE_SEPARATOR = "\n";
 
     /**
-     * Internal address container
-     *
-     * @var Address
+     * @var Address Internal address container
      */
     private $address;
 
@@ -122,8 +118,7 @@ abstract class AbstractComposer
     /**
      * Set address container
      *
-     * @param Address $address
-     *
+     * @param  Address $address
      * @return void
      */
     public function setAddress(Address $address)

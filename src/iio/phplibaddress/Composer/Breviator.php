@@ -6,9 +6,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- * @package phplibaddress\Composer
  */
 
 namespace iio\phplibaddress\Composer;
@@ -16,7 +13,8 @@ namespace iio\phplibaddress\Composer;
 /**
  * Abbreviate addressee information to fit within 26 characters
  * 
- * @package phplibaddress\Composer
+ * @author  Hannes Forsgård <hannes.forsgard@gmail.com>
+ * @package phplibaddress
  */
 class Breviator
 {
@@ -26,10 +24,9 @@ class Breviator
      * Ensures that the target string is no longer than 36 characters.
      * Transforms names to initials or removes them if neccesary.
      * 
-     * @param string $names
-     * @param string $surname
-     * @param string $title
-     * 
+     * @param  string $names
+     * @param  string $surname
+     * @param  string $title
      * @return string
      */
     public function concatenate($names = '', $surname = '', $title = '')
@@ -72,8 +69,7 @@ class Breviator
     /**
      * Shorten a string of names
      * 
-     * @param string $names
-     * 
+     * @param  string $names
      * @return string
      */
     private function abbrNames($names)

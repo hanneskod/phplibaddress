@@ -6,9 +6,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- * @package phplibaddress\Composer
  */
 
 namespace iio\phplibaddress\Composer;
@@ -18,22 +15,21 @@ use iio\phplibaddress\Address;
 /**
  * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
  * 
- * @package phplibaddress\Composer
+ * @author  Hannes Forsgård <hannes.forsgard@gmail.com>
+ * @package phplibaddress
  */
 class Sv extends AbstractComposer
 {
     /**
-     * Addresse breviator object
-     *
-     * @var Breviator
+     * @var Breviator Addresse breviator object
      */
     private $breviator;
 
     /**
-     * Model postal addresses as of Swedish standard SS 613401:2011 ed. 3
+     * Constructor
      *
      * @param Breviator $breviator Addresse breviator object
-     * @param Address $address Optional address object
+     * @param Address   $address   Optional address object
      */
     public function __construct(Breviator $breviator, Address $address = null)
     {

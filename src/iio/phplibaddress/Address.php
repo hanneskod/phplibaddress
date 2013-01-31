@@ -6,9 +6,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @author Hannes Forsgård <hannes.forsgard@gmail.com>
- * @package phplibaddress
  */
 
 namespace iio\phplibaddress;
@@ -19,166 +16,123 @@ use iio\phpcountry\TranslationException;
 /**
  * Base container of address parts
  *
+ * @author  Hannes Forsgård <hannes.forsgard@gmail.com>
  * @package phplibaddress
  */
 class Address
 {
     /**
-     * Address form
-     * 
-     * @var string
+     * @var string Address form
      */
     private $form = '';
 
     /**
-     * Address given name
-     *
-     * @var string
+     * @var string Address given name
      */
     private $givenName = '';
 
     /**
-     * Address surname
-     *
-     * @var string
+     * @var string Address surname
      */
     private $surname = '';
 
     /**
-     * Address name of organisation
-     * 
-     * @var string
+     * @var string Address name of organisation
      */
     private $organisationName = '';
 
     /**
-     * Address legal status
-     * 
-     * @var string
+     * @var string Address legal status
      */
     private $legalStatus = '';
 
     /**
-     * Address organisational unit
-     * 
-     * @var string
+     * @var string Address organisational unit
      */
     private $organisationalUnit = '';
 
     /**
-     * Address name of mailee
-     * 
-     * @var string
+     * @var string Address name of mailee
      */
     private $mailee = '';
 
     /**
-     * Address mailee role descriptor
-     * 
-     * @var string
+     * @var string Address mailee role descriptor
      */
     private $maileeRoleDescriptor = 'c/o';
 
     /**
-     * Type of delivery service
-     *
-     * @var string
+     * @var string Type of delivery service
      */
     private $deliveryService = '';
 
     /**
-     * Specification of delivery service
-     *
-     * @var string
+     * @var string Specification of delivery service
      */
     private $alternateDeliveryService = '';
 
     /**
-     * Address thoroughfare (street name)
-     *
-     * @var string
+     * @var string Address thoroughfare (street name)
      */
     private $thoroughfare = '';
 
     /**
-     * Address plot (street number)
-     *
-     * @var string
+     * @var string Address plot (street number)
      */
     private $plot = '';
 
     /**
-     * Address littera (letter)
-     *
-     * @var string
+     * @var string Address littera (letter)
      */
     private $littera = '';
 
     /**
-     * Address stairwell
-     *
-     * @var string
+     * @var string Address stairwell
      */
     private $stairwell = '';
 
     /**
-     * Address door (apartment number)
-     *
-     * @var string
+     * @var string Address door (apartment number)
      */
     private $door = '';
 
     /**
-     * Address floor
-     *
-     * @var string
+     * @var string Address floor
      */
     private $floor = '';
 
     /**
-     * Address supplementary data
-     *
-     * @var string
+     * @var string Address supplementary data
      */
     private $supplementaryDeliveryPointData = '';
 
     /**
-     * Address postcode (zip code)
-     *
-     * @var string
+     * @var string Address postcode (zip code)
      */
     private $postcode = '';
 
     /**
-     * Address town
-     *
-     * @var string
+     * @var string Address town
      */
     private $town = '';
 
     /**
-     * ISO 3166-1 country code translator
-     *
-     * @var Country
+     * @var Country ISO 3166-1 country code translator
      */
     private $countryCodes;
 
     /**
-     * ISO 3166 alpha 2 destination country code
-     *
-     * @var string
+     * @var string ISO 3166 alpha 2 destination country code
      */
     private $country = '';
 
     /**
-     * ISO 3166 alpha 2 origin country code
-     *
-     * @var string
+     * @var string ISO 3166 alpha 2 origin country code
      */
     private $countryOfOrigin = '';
 
     /**
-     * Base container of address parts
+     * Constructor
      *
      * @param Country $countryCodeTranslator The translation language should be
      * set either to the language of the originating country, or to one of the
@@ -202,8 +156,7 @@ class Address
     /**
      * Set form
      *
-     * @param string $form
-     * 
+     * @param  string $form
      * @return void
      */
     public function setForm($form)
@@ -225,8 +178,7 @@ class Address
     /**
      * Set given name
      *
-     * @param string $givenName
-     * 
+     * @param  string $givenName
      * @return void
      */
     public function setGivenName($givenName)
@@ -248,8 +200,7 @@ class Address
     /**
      * Set surname
      *
-     * @param string $surname
-     *
+     * @param  string $surname
      * @return void
      */
     public function setSurname($surname)
@@ -271,8 +222,7 @@ class Address
     /**
      * Set name of organisation
      *
-     * @param string $organisationName
-     * 
+     * @param  string $organisationName
      * @return void
      */
     public function setOrganisationName($organisationName)
@@ -294,8 +244,7 @@ class Address
     /**
      * Set legal status
      *
-     * @param string $legalStatus
-     *
+     * @param  string $legalStatus
      * @return void
      */
     public function setLegalStatus($legalStatus)
@@ -317,8 +266,7 @@ class Address
     /**
      * Set organisational unit
      *
-     * @param string $organisationalUnit
-     *
+     * @param  string $organisationalUnit
      * @return void
      */
     public function setOrganisationalUnit($organisationalUnit)
@@ -340,8 +288,7 @@ class Address
     /**
      * Set name of mailee
      *
-     * @param string $mailee
-     *
+     * @param  string $mailee
      * @return void
      */
     public function setNameOfMailee($mailee)
@@ -363,8 +310,7 @@ class Address
     /**
      * Set mailee role descriptor
      *
-     * @param string $maileeRoleDescriptor
-     *
+     * @param  string $maileeRoleDescriptor
      * @return void
      */
     public function setMaileeRoleDescriptor($maileeRoleDescriptor)
@@ -386,8 +332,7 @@ class Address
     /**
      * Set thoroughfare (street name)
      *
-     * @param string $thoroughfare
-     * 
+     * @param  string $thoroughfare
      * @return void
      */
     public function setThoroughfare($thoroughfare)
@@ -409,8 +354,7 @@ class Address
     /**
      * Set plot (street number)
      *
-     * @param string $plot
-     * 
+     * @param  string $plot
      * @return void
      */
     public function setPlot($plot)
@@ -432,8 +376,7 @@ class Address
     /**
      * Set littera (letter)
      *
-     * @param string $littera
-     * 
+     * @param  string $littera
      * @return void
      */
     public function setLittera($littera)
@@ -455,8 +398,7 @@ class Address
     /**
      * Set stairwell
      *
-     * @param string $stairwell
-     * 
+     * @param  string $stairwell
      * @return void
      */
     public function setStairwell($stairwell)
@@ -478,8 +420,7 @@ class Address
     /**
      * Set door (apartment number)
      *
-     * @param string $door
-     * 
+     * @param  string $door
      * @return void
      */
     public function setDoor($door)
@@ -501,8 +442,7 @@ class Address
     /**
      * Set floor
      *
-     * @param string $floor
-     * 
+     * @param  string $floor
      * @return void
      */
     public function setFloor($floor)
@@ -524,8 +464,7 @@ class Address
     /**
      * Set supplementary delivery point information
      *
-     * @param string $supplementaryData
-     * 
+     * @param  string $supplementaryData
      * @return void
      */
     public function setSupplementaryData($supplementaryData)
@@ -547,8 +486,7 @@ class Address
     /**
      * Set postcode (zip code)
      *
-     * @param string $postcode
-     * 
+     * @param  string $postcode
      * @return void
      */
     public function setPostcode($postcode)
@@ -570,8 +508,7 @@ class Address
     /**
      * Set town
      *
-     * @param string $town
-     * 
+     * @param  string $town
      * @return void
      */
     public function setTown($town)
@@ -583,8 +520,7 @@ class Address
     /**
      * Set destination country code
      *
-     * @param string $code Two letter ISO 3166-1 country code
-     *
+     * @param  string $code Two letter ISO 3166-1 country code
      * @return void
      */
     public function setCountryCode($code)
@@ -622,8 +558,7 @@ class Address
     /**
      * Set orogin country code
      *
-     * @param string $code Two letter ISO 3166-1 country code
-     *
+     * @param  string $code Two letter ISO 3166-1 country code
      * @return void
      */
     public function setCountryOfOrigin($code)
@@ -658,8 +593,7 @@ class Address
     /**
      * Set type of delivery service
      *
-     * @param string $service
-     *
+     * @param  string $service
      * @return void
      */
     public function setDeliveryService($service)
@@ -681,8 +615,7 @@ class Address
     /**
      * Set specification of delivery service
      *
-     * @param string $service
-     *
+     * @param  string $service
      * @return void
      */
     public function setAlternateDeliveryService($service)
