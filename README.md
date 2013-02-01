@@ -13,7 +13,7 @@ the swedish addressing standard SS 613401:2011 ed. 3 is supported.)
 Installation
 ------------
 
-Install using composer to automatically satisy dependencies and
+Install using composer to automatically satisfy dependencies and
 using the composer auto-loader.
 
 
