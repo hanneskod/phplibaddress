@@ -1,22 +1,13 @@
 <?php
 namespace iio\phplibaddress;
 
-use iio\phpcountry\Country;
+use iio\localefacade\LocaleFacade;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
-    public function getAddress()
-    {
-        $country = new Country;
-        $country->setLang('en');
-        $addr = new Address($country);
-
-        return $addr;
-    }
-
     public function testNoCountryName()
     {
-        $a = $this->getAddress();
+        $a = new Address(new LocaleFacade('en'));
         $this->assertEquals(
             '',
             $a->getCountry()

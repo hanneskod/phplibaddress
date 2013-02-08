@@ -10,8 +10,7 @@
 
 namespace iio\phplibaddress;
 
-use iio\phpcountry\Country;
-use iio\phpcountry\TranslationException;
+use iio\localefacade\LocaleFacade;
 
 /**
  * Base container of address parts
@@ -117,7 +116,7 @@ class Address
     private $town = '';
 
     /**
-     * @var Country ISO 3166-1 country code translator
+     * @var array ISO 3166-1 country code translator
      */
     private $countryCodes;
 
@@ -134,13 +133,13 @@ class Address
     /**
      * Constructor
      *
-     * @param Country $countryCodeTranslator The translation language should be
-     * set either to the language of the originating country, or to one of the
-     * colonial languages (eg. english).
+     * @param LocaleFacade $locale The translation language should be
+     *     set either to the language of the originating country, or to one of the
+     *     colonial languages (eg. english).
      */
-    public function __construct(Country $countryCodeTranslator)
+    public function __construct(LocaleFacade $locale)
     {
-        $this->countryCodes = $countryCodeTranslator;
+        $this->countryCodes = $locale->getDisplayCountries();
     }
 
     /**
@@ -546,13 +545,9 @@ class Address
      */
     public function getCountry()
     {
-        try {
-
-            return $this->countryCodes->translate($this->getCountryCode());
-        } catch (TranslationException $e) {
-
-            return '';
-        }
+        return isset($this->countryCodes[$this->getCountryCode()])
+            ? $this->countryCodes[$this->getCountryCode()]
+            : '';
     }
 
     /**

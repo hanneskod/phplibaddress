@@ -1,18 +1,14 @@
 <?php
 namespace iio\phplibaddress\Composer;
 
-use iio\phpcountry\Country;
+use iio\localefacade\LocaleFacade;
 use iio\phplibaddress\Address;
 
 class SvTest extends \PHPUnit_Framework_TestCase
 {
     public function getAddress()
     {
-        $country = new Country;
-        $country->setLang('en');
-        $addr = new Address($country);
-
-        return $addr;
+        return new Address(new LocaleFacade('en'));
     }
 
     /**

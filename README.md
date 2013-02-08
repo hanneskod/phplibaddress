@@ -3,8 +3,6 @@ phplibaddress
 
 Render addresses according to national addressing standards
 
-Uses *phpcountry* to print country names in multiple languages
-
 Separates the broken down address data from composers, witch render
 render the address according to varying standards. (At present only
 the swedish addressing standard SS 613401:2011 ed. 3 is supported.)
@@ -21,13 +19,12 @@ Usage
 -----
 
     namespace iio\phplibaddress;
-    use iio\phpcountry\Country;
+
+    use iio\localefacade\LocaleFacade;
     use iio\phplibaddress\Composer\Sv;
     use iio\phplibaddress\Composer\Breviator;
 
-    $country = new Country;
-    $country->setLang('en');
-    $addr = new Address($country);
+    $addr = new Address(new LocaleFacade('en'));
 
     $addr->setGivenName('Many many names');
     $addr->setSurname('Surnameone Surnametwo');
